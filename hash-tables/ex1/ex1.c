@@ -18,12 +18,20 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
     // use values as keys and indexes as values
     hash_table_insert(ht, weights[i], i);
   }
+
+
   // find pairs of numbers equal to limit
-  for(int j = 0; j < limit/2; j++){
+  for(int j = 0; j <= limit/2; j++){
 //    printf("\n\nlooping through combinations\n");
     int l_key = limit - j;
+    printf("l_key = %d\n", l_key);
+    printf("smaller key = %d\n", j);
     int l_index = hash_table_retrieve(ht, l_key);
     int s_index = hash_table_retrieve(ht, j);
+    if(l_index >= 0 && l_index == s_index){
+      hash_table_remove(ht, s_index);
+      s_index = hash_table_retrieve(ht, j);
+    }
 //    printf("l_index = %d\n", l_index);
 //    printf("s_index = %d\n", s_index);
     if(l_index >= 0 && s_index >= 0){
