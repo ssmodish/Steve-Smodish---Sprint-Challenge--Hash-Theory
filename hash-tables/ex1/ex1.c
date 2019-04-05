@@ -28,17 +28,22 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
     printf("smaller key = %d\n", j);
     int l_index = hash_table_retrieve(ht, l_key);
     int s_index = hash_table_retrieve(ht, j);
-    if(l_index >= 0 && l_index == s_index){
-      hash_table_remove(ht, s_index);
-      s_index = hash_table_retrieve(ht, j);
-    }
+//    if(l_index >= 0 && l_index == s_index){
+//      hash_table_remove(ht, s_index);
+//      s_index = hash_table_retrieve(ht, j);
+//    }
 //    printf("l_index = %d\n", l_index);
 //    printf("s_index = %d\n", s_index);
     if(l_index >= 0 && s_index >= 0){
 //      printf("{%d, %d}", l_index, s_index);
       Answer *answer = malloc(sizeof(Answer));
-      answer->index_1 = l_index;
-      answer->index_2 = s_index;
+      if(l_index > s_index) {
+        answer->index_1 = l_index;
+        answer->index_2 = s_index;
+      } else {
+        answer->index_1 = s_index;
+        answer->index_2 = l_index;
+      }
       return answer;
     }
   }
