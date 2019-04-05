@@ -14,26 +14,23 @@ Answer *get_indices_of_item_weights(int *weights, int length, int limit)
   }
   // populate the hash table
   for(int i = 0; i < length; i++){
-    hash_table_insert(ht, i, weights[i]);
+    // won't get fooled again
+    // use values as keys and indexes as values
+    hash_table_insert(ht, weights[i], i);
   }
   // find pairs of numbers equal to limit
   for(int j = 0; j < limit/2; j++){
-    printf("looping\n");
-    int larger = limit - j;
-    printf("limit = %d\n", limit);
-    printf("larger = %d\n", larger);
-    printf("smaller = %d\n", j);
-    int l_key = hash_table_retrieve(ht, larger);
-    printf("l_key = %d\n", l_key);
-
-    int s_key = hash_table_retrieve(ht, j);
-    printf("s_key = %d\n", s_key);
-
-    if(l_key >= 0 && s_key >= 0){
+//    printf("\n\nlooping through combinations\n");
+    int l_key = limit - j;
+    int l_index = hash_table_retrieve(ht, l_key);
+    int s_index = hash_table_retrieve(ht, j);
+//    printf("l_index = %d\n", l_index);
+//    printf("s_index = %d\n", s_index);
+    if(l_index >= 0 && s_index >= 0){
+//      printf("{%d, %d}", l_index, s_index);
       Answer *answer = malloc(sizeof(Answer));
-      answer->index_1 = larger;
-      answer->index_2 = j;
-
+      answer->index_1 = l_index;
+      answer->index_2 = s_index;
       return answer;
     }
   }
